@@ -1,0 +1,30 @@
+kind = "web"
+previewPath = "/dashboard/"
+title = "ORCH_2026"
+version = "1.0.0"
+id = "artifacts/orch2026"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/dashboard/" ]
+localPort = 9000
+
+[services.development]
+run = "pnpm --filter @workspace/orch2026 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/orch2026", "run", "build" ]
+publicDir = "artifacts/orch2026/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "9000"
+BASE_PATH = "/dashboard/"

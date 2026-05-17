@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/app"
+title = "ORCH_2026"
+version = "1.0.0"
+id = "artifacts/orchestrator"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/app" ]
+localPort = 3000
+
+[services.development]
+run = "pnpm --filter @workspace/orchestrator run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/orchestrator", "run", "build" ]
+publicDir = "artifacts/orchestrator/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "3000"
+BASE_PATH = "/app"
